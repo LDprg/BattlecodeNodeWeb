@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  client:
+    container_name: client
+    build: './client'
+    volumes:
+      - './client:/usr/src/app'
+    ports:
+      - '80:4200'
+  server:
+    container_name: server
+    build: './server'
+    volumes:
+      - './server:/usr/src/app'
+    ports:
+      - '8080:8080'
+    environment:
+      - MONGO_URL=mongodb://database/mean-app
+    links:
+      - database
+    depends_on:
+      - database
+  database:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - './db:/data/db'
+    ports:
+        - '27017:27017'
