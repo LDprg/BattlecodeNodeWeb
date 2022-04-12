@@ -6,7 +6,7 @@ const app = express();
 const config = {
     mongo: {
         uri: process.env.MONGO_URL ||
-        'mongodb://127.0.0.1/mean-app',
+        'mongodb://127.0.0.1/BattlecodeWeb',
         options: {
             useNewUrlParser: true
         }

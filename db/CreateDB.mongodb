@@ -1,0 +1,11 @@
+// MongoDB Playground
+
+const database = 'BattlecodeWeb';
+const collection = 'users';
+
+// Create a new database.
+use(database);
+
+// Create a new collection.
+db.createCollection(collection);
+
