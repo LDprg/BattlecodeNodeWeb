@@ -10,5 +10,6 @@ RUN npm install -g @angular/cli
 COPY . .
 
 EXPOSE 4200
+EXPOSE 49153
 
 CMD [ "npm", "start"]

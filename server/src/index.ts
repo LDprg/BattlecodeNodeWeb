@@ -28,14 +28,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Cross Origin middleware
-app.use(function(req, res, next) {
+app.use(function(req : any, res : any, next : any) {
   res.header("Access-Control-Allow-Origin", "*")
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
   next()
 })
 
-app.get('/', (req, res) => res.send('Hello World!'))
-
-require('./routes')(app);
+app.get('/', (req : any, res : any) => res.send('Hello World!'))
 
 app.listen(config.port, () => console.log(`Example app listening on ${config.port}!`))

@@ -34,6 +34,5 @@ app.use(function (req, res, next) {
     next();
 });
 app.get('/', (req, res) => res.send('Hello World!'));
-require('./routes')(app);
 app.listen(config.port, () => console.log(`Example app listening on ${config.port}!`));
 //# sourceMappingURL=index.js.map
