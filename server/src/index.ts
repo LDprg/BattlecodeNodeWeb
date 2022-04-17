@@ -6,7 +6,7 @@ const app = express();
 const config = {
     mongo: {
         uri: process.env.MONGO_URL ||
-        'mongodb://127.0.0.1/BattlecodeWeb',
+        'mongodb://localhost/BattlecodeWeb',
         options: {
             useNewUrlParser: true
         }
@@ -35,5 +35,6 @@ app.use(function(req : any, res : any, next : any) {
 })
 
 app.get('/', (req : any, res : any) => res.send('Hello World!'))
+
 
 app.listen(config.port, () => console.log(`Example app listening on ${config.port}!`))

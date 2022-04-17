@@ -1,54 +1,73 @@
 <div class="sidebar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
-    <a routerLink="/" routerLinkActive="active" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-      <span class="fs-4">Battlecode 22 Challanges</span>
-    </a>
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="border-top my-3"></li>
-      <li>
-        <a routerLink="/home" routerLinkActive="active" class="nav-link text-white">
-          <i class="bi bi-house-door"></i>
-          Home
-        </a>
-      </li>
-      <li>
-        <a routerLink="/gettingStarted" routerLinkActive="active" class="nav-link text-white">
-          <i class="bi bi-sun"></i>
-          Getting Started
-        </a>
-      </li>
-      <li>
-        <a routerLink="/resouces" routerLinkActive="active" class="nav-link text-white">
-          <i class="bi bi-clipboard2-data"></i>
-          Resouces
-        </a>
-      </li>
+  <a routerLink="/" routerLinkActive="active"
+    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    <span class="fs-4">Battlecode 22 Challanges</span>
+  </a>
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="border-top my-3"></li>
+    <li>
+      <a routerLink="/home" routerLinkActive="active" class="nav-link text-white">
+        <i class="bi bi-house-door"></i>
+        Home
+      </a>
+    </li>
+    <li>
+      <a routerLink="/gettingStarted" routerLinkActive="active" class="nav-link text-white">
+        <i class="bi bi-sun"></i>
+        Getting Started
+      </a>
+    </li>
+    <li>
+      <a routerLink="/resouces" routerLinkActive="active" class="nav-link text-white">
+        <i class="bi bi-clipboard2-data"></i>
+        Resouces
+      </a>
+    </li>
+    <span *ngIf="isLoggedIn()">
       <hr>
-    </ul>
-    <hr>
-    <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser"
+      <li>
+        <a routerLink="/upload" routerLinkActive="active" class="nav-link text-white">
+          <i class="bi bi-upload"></i>
+          Upload
+        </a>
+      </li>
+      <li>
+        <a routerLink="/test" routerLinkActive="active" class="nav-link text-white">
+          <i class="bi bi-wrench"></i>
+          Test
+        </a>
+      </li>
+    </span>
+  </ul>
+  <hr>
+  <div class="dropdown">
+    <span *ngIf="isLoggedIn(); else LoginRegisterButtons">
+      <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser"
         data-bs-toggle="dropdown" aria-expanded="false">
-        <strong></strong>
+        <strong>{{getName()}}</strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser">
         <li>
-          <a class="dropdown-item" href="#">Settings</a>
+          <a class="dropdown-item">Settings</a>
         </li>
         <li>
-          <a class="dropdown-item" href="#">Profile</a>
+          <a class="dropdown-item">Profile</a>
         </li>
         <li>
           <hr class="dropdown-divider">
         </li>
         <li>
-          <a class="dropdown-item" href="">Logout</a>
+          <a class="dropdown-item" (click)="logout()">Logout</a>
         </li>
       </ul>
-      <a href="" class="d-flex align-items-center text-white text-decoration-none" aria-expanded="false">
+    </span>
+    <ng-template #LoginRegisterButtons>
+      <a routerLink="/login" routerLinkActive="active" class="d-flex align-items-center text-white text-decoration-none" aria-expanded="false">
         <strong>Login</strong>
       </a>
-      <a href="" class="d-flex align-items-center text-white text-decoration-none" aria-expanded="false">
+      <a routerLink="/register" routerLinkActive="active" class="d-flex align-items-center text-white text-decoration-none" aria-expanded="false">
         <strong>Register</strong>
       </a>
-    </div>
+    </ng-template>
   </div>
+</div>
