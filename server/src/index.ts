@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 import User from './models/user';
 
@@ -51,12 +52,18 @@ db.once('open', function () {
   passport.serializeUser(User.serializeUser());
   passport.deserializeUser(User.deserializeUser());
 
-  // Cross Origin middleware
+  /*// Cross Origin middleware
   app.use(function (req: any, res: any, next: any) {
     res.header("Access-Control-Allow-Origin", "*");
+    res.header("Allow-Origin-With-Credentials", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  });
+  });*/
+  app.use(cors({
+      credentials: true, 
+      origin: true,
+      methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+  }));
 
   app.get('/', (req: any, res: any) => res.send('Hello World!'));
   app.post('/', (req: any, res: any) => res.send('Hello World!'));
@@ -81,7 +88,10 @@ db.once('open', function () {
 
   app.post('/login', passport.authenticate('local'), (req, res) => {
     console.log("login");
-    res.json({ success: req.isAuthenticated() });
+    var user :any = req.user;
+    user.hash = undefined;
+    user.salt = undefined;
+    res.json(user);
   });
 
   app.get('/islogin', (req, res) => {

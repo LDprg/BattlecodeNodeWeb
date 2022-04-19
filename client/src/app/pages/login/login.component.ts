@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required]),//, Validators.email]),
+    name: new FormControl('', [Validators.required]),//, Validators.email]),
     passwd: new FormControl('', [Validators.required, Validators.minLength(3)])
   });
 
@@ -22,21 +22,29 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.loginForm.get('email')?.invalid)
-      this.errorMsg = { err: { message: "No Email specfied" } };
+    if (this.loginForm.get('name')?.invalid)
+      this.errorMsg = { err: { message: "No Username specfied" } };
     else if (this.loginForm.get('passwd')?.invalid)
       this.errorMsg = { err: { message: "Password not long enough (min 3 Chars)" } };
 
     if (this.loginForm.valid) {
-      this.user.login(this.loginForm.get('email')?.value, this.loginForm.get('passwd')?.value).subscribe(
-        (val) => {
-          this.error = !val.success;
-          this.success = val.success;
+      this.user.login(this.loginForm.get('name')?.value, this.loginForm.get('passwd')?.value).subscribe(
+        (user) => {
+          console.log(user);
+          var success = false;
 
-          if (val.success != true)
-            this.errorMsg = val;
-          else
+          if(user.username == this.loginForm.get('name')?.value)
+            success = true
+
+          this.error = !success;
+          this.success = success;
+
+          if (!success)
+            this.errorMsg = { err: { message: "Wrong Password or Username!" } };
+          else{
+            this.user.setUserInfo(user);
             this.user.updatelogin();
+          }
         },
         (err) => {
           this.error = true;

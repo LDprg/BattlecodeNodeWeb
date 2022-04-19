@@ -10,7 +10,6 @@ export class UploadComponent implements OnInit {
   constructor(private user: UserService) { }
 
   ngOnInit(): void {
-    this.user.onlyLogIn();
   }
 
 }

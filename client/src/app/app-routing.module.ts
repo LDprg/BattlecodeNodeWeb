@@ -7,13 +7,14 @@ import { UploadComponent } from './pages/upload/upload.component';
 import { TestComponent } from './pages/test/test.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
+import { AuthGuardService as AuthGuard  } from './services/auth-guard.service';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, pathMatch: 'full' },
   { path: 'gettingStarted', component: GettingStartedComponent, pathMatch: 'full' },
   { path: 'resouces', component: ResoucesComponent, pathMatch: 'full' },
-  { path: 'upload', component: UploadComponent, pathMatch: 'full' },
-  { path: 'test', component: TestComponent, pathMatch: 'full' },
+  { path: 'upload', component: UploadComponent, pathMatch: 'full', canActivate : [AuthGuard] },
+  { path: 'test', component: TestComponent, pathMatch: 'full', canActivate : [AuthGuard] },
   { path: 'login', component: LoginComponent, pathMatch: 'full' },
   { path: 'register', component: RegisterComponent, pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full'},
