@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import * as bcrypt from 'bcryptjs';
 import { Observable } from 'rxjs';
 
 @Injectable({

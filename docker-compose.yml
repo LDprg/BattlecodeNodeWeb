@@ -13,20 +13,26 @@ services:
   server:
     container_name: server
     build: './server'
+    restart: always
     volumes:
       - './server:/usr/src/app'
     ports:
       - '8080:8080'
     environment:
-      - MONGO_URL=mongodb://database/mean-app
+      - MONGO_URL=mongodb://user:9TF5KKZSu9kDQbxj@localhost/BattlecodeWeb
     links:
       - database
     depends_on:
       - database
   database:
-    container_name: mongo
+    container_name: mongodb
     image: mongo
-#    volumes:
-#      - './db:/data/db'
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: BattlecodeWeb
     ports:
         - '27017:27017'
+    volumes:
+      - ./db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
