@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/_services/user.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   templateUrl: './test.component.html',
@@ -11,8 +11,9 @@ export class TestComponent implements OnInit {
   constructor(private user: UserService) { }
 
   ngOnInit(): void {
-    //this.user.isLoggedIn(true);
-    this.user.test().forEach(val => this.test += val);
+    this.user.test().subscribe((val) => {
+      this.test = val;
+    });
   }
 
 }

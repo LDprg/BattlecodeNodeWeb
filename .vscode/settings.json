@@ -1,0 +1,4 @@
+{
+    "autoimport.filesToScan": "**/*",
+    "autoimport.absolute": true
+}

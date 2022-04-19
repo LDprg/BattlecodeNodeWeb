@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './_page/home/home.component';
-import { GettingStartedComponent } from './_page/getting-started/getting-started.component';
-import { ResoucesComponent } from './_page/resouces/resouces.component';
-import { UploadComponent } from './_page/upload/upload.component';
-import { TestComponent } from './_page/test/test.component';
-import { RegisterComponent } from './_page/register/register.component';
-import { LoginComponent } from './_page/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
+import { GettingStartedComponent } from './pages/getting-started/getting-started.component';
+import { ResoucesComponent } from './pages/resouces/resouces.component';
+import { UploadComponent } from './pages/upload/upload.component';
+import { TestComponent } from './pages/test/test.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, pathMatch: 'full' },

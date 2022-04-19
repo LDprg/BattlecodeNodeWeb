@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../_services/user.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,7 +18,7 @@ export class SidebarComponent implements OnInit {
   }
 
   isLoggedIn() : boolean {
-    return this.user.isLoggedIn();
+    return this.user.loggedIn;
   }
 
   getName() : string {
