@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './login.component.html',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   error: boolean = false;
   errorMsg: any = '';
 
-  constructor(private user: UserService) { }
+  constructor(private user: UserService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit {
           else{
             this.user.setUserInfo(user);
             this.user.updatelogin();
+            this.router.navigate(["home"]);
           }
         },
         (err) => {

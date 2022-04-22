@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
+interface callback {
+  (): void;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +18,11 @@ export class UserService {
 
   private isJSONValid(data: any): boolean {
     return data && JSON.parse(data);
+  }
+
+  isStorageLogin(): boolean {
+    let userData = localStorage.getItem('userInfo')
+    return this.isJSONValid(userData);
   }
 
   setUserInfo(user: any) {
@@ -50,13 +58,16 @@ export class UserService {
     });
   }
 
-  updatelogin() {
+  updatelogin(call?:callback){
     var url = this.server + '/islogin';
 
     this.http.get(url, { responseType: 'text', withCredentials: true }).subscribe((data) => {
       console.log('Login update :' + data);
       var val = JSON.parse(data);
       this.loggedIn = val.success;
+
+      if(call)
+        call();
     });
   }
 

@@ -1,1 +1,47 @@
-<p>upload works!</p>
+<div class="alert alert-danger" *ngIf="error">
+  <strong>Error!</strong>
+  {{msg}}
+</div>
+
+<div class="alert alert-success" *ngIf="success">
+  <strong>Success!</strong>
+  {{msg}}
+</div>
+
+<div class="mb-3">
+  <label for="github" class="form-label">Enter Github Repository link and release:</label>
+  <div id="github" class="input-group">
+    <input type="text" id="githubLink" class="form-control" style="width:70% " placeholder="Github Link"
+      [(ngModel)]="githubLink">
+    <input type="text" id="githubTag" class="form-control" style="width:30% " placeholder="Tag" [(ngModel)]="githubTag">
+  </div>
+  <button type="button" class="btn btn-primary mt-1" (click)="addBot()">Add Bot</button>
+</div>
+
+<div class="mb-3">
+  <label for="newgithubTag" class="form-label">Tag for edit:</label>
+  <input type="text" id="newgithubTag" class="form-control" style="width:30% " placeholder="Tag"
+    [(ngModel)]="newgithubTag">
+</div>
+
+<h2>Uploads</h2>
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Link</th>
+        <th scope="col">Tag</th>
+        <th scope="col">Edit Tag</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of entries">
+        <td>{{entry.link}}</td>
+        <td>{{entry.tag}}</td>
+        <td><button type="button" class="btn btn-outline-success btn-sm" (click)="edit(entry._id)">edit</button></td>
+        <td><button type="button" class="btn btn-outline-danger btn-sm" (click)="delete(entry._id)">x</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

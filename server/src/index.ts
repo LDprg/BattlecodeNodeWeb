@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 import User from './models/user';
+import Bots from './models/bots';
 
 const app = express();
 const config = {
@@ -15,7 +16,8 @@ const config = {
       'mongodb://user:9TF5KKZSu9kDQbxj@database/BattlecodeWeb',
     options: {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
+      useFindAndModify: false
     }
   },
   port: process.env.port ||
@@ -60,9 +62,9 @@ db.once('open', function () {
     next();
   });*/
   app.use(cors({
-      credentials: true, 
-      origin: true,
-      methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+    credentials: true,
+    origin: true,
+    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH']
   }));
 
   app.get('/', (req: any, res: any) => res.send('Hello World!'));
@@ -88,7 +90,7 @@ db.once('open', function () {
 
   app.post('/login', passport.authenticate('local'), (req, res) => {
     console.log("login");
-    var user :any = req.user;
+    var user: any = req.user;
     user.hash = undefined;
     user.salt = undefined;
     res.json(user);
@@ -103,6 +105,57 @@ db.once('open', function () {
     console.log("Logout");
     req.logout();
     res.send('You are logged out');
+  });
+
+  app.get('/addbot', function (req, res) {
+    console.log("Addbot");
+    if (req.isAuthenticated()) {
+      var bot = {
+        userid: req.user.id,
+        link: req.query.link,
+        tag: req.query.tag
+      };
+      db.collection("bots").insertOne(bot);
+      res.json({ success: true });
+    }
+    else
+      res.json({ success: false, error: "Login first!" });
+  });
+
+  app.get('/getbot', function (req: any, res: any) {
+    console.log("Getbot");
+    if (req.isAuthenticated()) {
+      Bots.find({ userid: req.user.id }).sort([['_id', 'descending']]).then((val: any) => {
+        res.json({ success: true, data: val });
+      });
+    }
+    else
+      res.json({ success: false, error: "Login first!" });
+  });
+
+  app.get('/rmbot', function (req: any, res: any) {
+    console.log("rmbot");
+    if (req.isAuthenticated()) {
+      Bots.deleteOne({ $and: [{ _id: req.query.id }, { userid: req.user.id }] }).then((val: any) => {
+        if (val.deletedCount > 0)
+          res.json({ success: true });
+        else
+          res.json({ success: false, error: "Item not exists!" });
+      });
+    }
+    else
+      res.json({ success: false, error: "Login first!" });
+  });
+
+  app.get('/editbot', function (req: any, res: any) {
+    console.log("editbot");
+    if (req.isAuthenticated()) {
+      Bots.findOneAndUpdate({ $and: [{ _id: req.query.id }, { userid: req.user.id }] }, { tag: req.query.tag }).then((val: any) => {
+        res.json({ success: true });
+      });
+    }
+    else
+      res.json({ success: false, error: "Login first!" });
   });
 
   app.listen(config.port, () => console.log(`Example app listening on ${config.port}!`));

@@ -14,6 +14,8 @@ FROM node:17-alpine
 
 WORKDIR /usr/src/app
 
+RUN apk add github-cli
+
 COPY --from=builder /usr/src/app .
 
 EXPOSE 8080
